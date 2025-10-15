@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Todo App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    h1 {
+      color: #333;
+    }
+    ul {
+      list-style-type: none;
+      padding-left: 0;
+    }
+    li {
+      background: #f0f0f0;
+      margin: 5px 0;
+      padding: 10px;
+      border-radius: 5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .completed {
+      text-decoration: line-through;
+      color: gray;
+    }
+    a, button {
+      margin-left: 10px;
+      text-decoration: none;
+      color: blue;
+      cursor: pointer;
+      border: none;
+      background: none;
+      font-size: 1em;
+    }
+    a:hover, button:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <h1>Todo App</h1>
+  <a href="/add-task">Add New Task</a>
+
+  <% if(tasks.length > 0) { %>
+    <h2>Available Tasks:</h2>
+    <ul>
+      <% tasks.forEach(t => { %>
+        <li>
+          <span class="<%= t.completed ? 'completed' : '' %>"><%= t.task %></span>
+          <span>
+            <% if(!t.completed) { %>
+              <form action="/complete/<%= t._id %>" method="POST" style="display:inline;">
+                <button type="submit">Complete</button>
+              </form>
+            <% } else { %>
+              <span>✔ Completed</span>
+            <% } %>
+            <a href="/update/<%= t._id %>">Update</a>
+            <a href="/delete/<%= t._id %>">Delete</a>
+          </span>
+        </li>
+      <% }) %>
+    </ul>
+  <% } else { %>
+    <h2>No Tasks Available</h2>
+  <% } %>
+</body>
+</html>
